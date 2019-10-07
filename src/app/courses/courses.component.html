@@ -1,0 +1,17 @@
+<h1>{{ myCourse.name }}</h1>
+<div>
+    Lorem, ipsum dolor sit amet consectetur
+   
+    <input class="form-control" (keyup.enter)="addCourse()" [(ngModel)]="myCourse.name" type="text">
+    
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let course of courses">
+            {{ course.name }}
+        <div class="text-right">
+            <button (click)="destroyCourse(course.id)" class="btn btn-sm btn-danger">delete</button>
+        </div>
+        </li>
+    </ul>
+</div>
+
+<button class="btn btn-primary">save</button>
