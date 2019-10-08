@@ -10,6 +10,7 @@ import { ContentComponent } from './content/content.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { FormsModule } from '@angular/forms';
+import { VotesComponent } from './votes/votes.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { FormsModule } from '@angular/forms';
     NavbarComponent,
     IntroComponent,
     ContentComponent,
-    SidebarComponent
+    SidebarComponent,
+    VotesComponent
   ],
   imports: [
     BrowserModule,

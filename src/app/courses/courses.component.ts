@@ -13,13 +13,17 @@ export class CoursesComponent {
   myCourse = {
     id: uid(),
     name: '',
-    active: false
+    active: false,
+    vote: {
+      like: 0,
+      disLike: 0
+    }
   };
 
   courses = [
-    {id: 1, name: 'Laravel', active: true},
-    {id: 2, name: 'Symfony', active: false},
-    {id: 3, name: 'cakePHP', active: true}
+    {vote: {like: 12, disLike: 2}, id: 1, name: 'Laravel', active: true},
+    {vote: {like: 122, disLike: 2}, id: 2, name: 'Symfony', active: false},
+    {vote: {like: 14, disLike: 0}, id: 3, name: 'cakePHP', active: true}
   ];
 
   image = "https://picsum.photos/200/300";
@@ -54,12 +58,24 @@ export class CoursesComponent {
     this.myCourse = {
       id: uid(),
       name: '',
-      active: false
+      active: false,
+      vote: {
+        like: 0,
+        disLike: 0
+      }
     };
   }
 
   toggleCourse(course) {
     course.active = !course.active;
+  }
+
+  incLike(course) {
+    course.vote.like++;
+  }
+
+  incDisLike(course) {
+    course.vote.disLike++;
   }
 
 }
