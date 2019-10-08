@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-votes',
@@ -10,6 +10,8 @@ export class VotesComponent implements OnInit {
   @Input('my-like') like = 0;
   @Input('my-dislike') disLike = 0;
 
+  @Output('updateVoteFromChildToParent') editVote = new EventEmitter();
+
   constructor() { }
 
   ngOnInit() {
@@ -17,10 +19,12 @@ export class VotesComponent implements OnInit {
 
   incLike() {
     this.like++;
+    this.editVote.emit({type: 1, data: this.like});
   }
 
   incDisLike() {
     this.disLike++;
+    this.editVote.emit({type: 0, data: this.disLike });
   }
 
 }

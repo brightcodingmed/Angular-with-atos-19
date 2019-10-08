@@ -78,4 +78,12 @@ export class CoursesComponent {
     course.vote.disLike++;
   }
 
+  updateVote(etat, course) {
+    if(etat.type) {
+      course.vote.like = etat.data;
+    }else {
+      course.vote.disLike = etat.data;
+    }
+  }
+
 }
