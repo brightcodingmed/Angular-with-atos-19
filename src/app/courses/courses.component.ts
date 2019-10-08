@@ -8,15 +8,18 @@ import uid  from 'uid';
 })
 export class CoursesComponent {
 
+  editable = false;
+
   myCourse = {
     id: uid(),
-    name: ''
+    name: '',
+    active: false
   };
 
   courses = [
-    {id: 1, name: 'Laravel'},
-    {id: 2, name: 'Symfony'},
-    {id: 3, name: 'cakePHP'}
+    {id: 1, name: 'Laravel', active: true},
+    {id: 2, name: 'Symfony', active: false},
+    {id: 3, name: 'cakePHP', active: true}
   ];
 
   image = "https://picsum.photos/200/300";
@@ -29,15 +32,34 @@ export class CoursesComponent {
 
   addCourse() {
     this.courses = [...this.courses, this.myCourse];
-    this.myCourse = {
-      id: uid(),
-      name: ''
-    };
+    this.initCourse();
   }
 
   destroyCourse(id) {
     
      this.courses = this.courses.filter((course) => course.id !== id);
+  }
+
+  editCourse(course) {
+    this.myCourse = course;
+    this.editable = true;
+  }
+
+  updateCourse() {
+     this.editable = false;
+     this.initCourse();
+  }
+
+  initCourse() {
+    this.myCourse = {
+      id: uid(),
+      name: '',
+      active: false
+    };
+  }
+
+  toggleCourse(course) {
+    course.active = !course.active;
   }
 
 }

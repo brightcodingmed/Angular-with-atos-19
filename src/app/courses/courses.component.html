@@ -2,12 +2,28 @@
 <div>
     Lorem, ipsum dolor sit amet consectetur
    
-    <input class="form-control" (keyup.enter)="addCourse()" [(ngModel)]="myCourse.name" type="text">
+    <input class="form-control" [(ngModel)]="myCourse.name" type="text">
     
+    <button *ngIf="!editable" (click)="addCourse()" class="btn btn-primary btn-block">Add</button>
+    <button *ngIf="editable" (click)="updateCourse()" class="btn btn-warning btn-block">Update</button>
+
     <ul class="list-group">
         <li class="list-group-item" *ngFor="let course of courses">
-            {{ course.name }}
+          <i
+            (click)="toggleCourse(course)"
+            [ngClass]="{
+                'disable-course': !course.active,
+                'enable-course': course.active
+            }"
+
+            [ngStyle]="{
+                fontSize: course.active ? '30px' : '15px'
+            }"
+             class="fa fa-power-off"></i>
+           
+             {{ course.name }}
         <div class="text-right">
+            <button (click)="editCourse(course)" class="btn btn-warning mr-1 btn-sm">Edit</button>
             <button (click)="destroyCourse(course.id)" class="btn btn-sm btn-danger">delete</button>
         </div>
         </li>
