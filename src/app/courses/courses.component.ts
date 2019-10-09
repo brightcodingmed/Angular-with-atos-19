@@ -9,7 +9,7 @@ import uid  from 'uid';
 export class CoursesComponent {
 
   editable = false;
-
+  display = false;
   myCourse = {
     id: uid(),
     name: '',

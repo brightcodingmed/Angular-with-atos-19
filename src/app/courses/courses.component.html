@@ -7,36 +7,79 @@
     <button *ngIf="!editable" (click)="addCourse()" class="btn btn-primary btn-block">Add</button>
     <button *ngIf="editable" (click)="updateCourse()" class="btn btn-warning btn-block">Update</button>
 
-    <ul class="list-group">
-        <li class="list-group-item" *ngFor="let course of courses">
-          <i
-            (click)="toggleCourse(course)"
-            [ngClass]="{
-                'disable-course': !course.active,
-                'enable-course': course.active
-            }"
+   <div class="alert"
+     [ngClass]="{
+         'alert-success': courses.length,
+         'alert-warning': !courses.length
+     }"
+   >
+     {{ courses.length ? courses.length+' course(s)' : 'course not found !' }}
+   </div>
 
-            [ngStyle]="{
-                fontSize: course.active ? '30px' : '15px'
-            }"
-             class="fa fa-power-off"></i>
-           
-             {{ course.name }}
-             <div>
-                 {{ course.vote | json }}
-              <app-votes 
-               [my-like]="course.vote.like" 
-               [my-dislike]="course.vote.disLike"
-               (updateVoteFromChildToParent)="updateVote($event, course)"
-               >
-            </app-votes>
-            </div>
-        <div class="text-right">
-            <button (click)="editCourse(course)" class="btn btn-warning mr-1 btn-sm">Edit</button>
-            <button (click)="destroyCourse(course.id)" class="btn btn-sm btn-danger">delete</button>
-        </div>
-        </li>
-    </ul>
+   <button (click)="display = false" class="btn btn-light btn-sm mr-1"><i class="fa fa-list"></i></button>
+
+   <button (click)="display = true" class="btn btn-light btn-sm"><i class="fa fa-th"></i></button>
+   
+   <div *ngIf="display; then grid else list"></div>
+
+   <ng-template #grid>
+       <div class="row">
+           <div class="col-md-4 col-sm-6" *ngFor="let course of courses">
+               <div class="card">
+                
+                   <div class="card-body">
+                       <h4 class="card-title">{{ course.name }}</h4>
+                       <div class="card-text">
+                           <app-votes   
+                           (updateVoteFromChildToParent)="updateVote($event, course)"     
+                            [my-like]="course.vote.like" 
+                            [my-dislike]="course.vote.disLike" ></app-votes>
+                           <button (click)="editCourse(course)" class="btn btn-warning mr-1 btn-sm">Edit</button>
+                           <button (click)="destroyCourse(course.id)" class="btn btn-sm btn-danger">delete</button>
+                       </div>
+                   </div>
+               </div>
+           </div>
+       </div>
+   </ng-template>
+   
+    <ng-template #list>
+        <ul class="list-group">
+             <li class="list-group-item" *ngFor="let course of courses">
+               <i
+                 (click)="toggleCourse(course)"
+                 [ngClass]="{
+                     'disable-course': !course.active,
+                     'enable-course': course.active
+                 }"
+     
+                 [ngStyle]="{
+                     fontSize: course.active ? '30px' : '15px'
+                 }"
+                  class="fa fa-power-off"></i>
+                
+                  {{ course.name }}
+                  <div>
+                      {{ course.vote | json }}
+                   <app-votes 
+                    [my-like]="course.vote.like" 
+                    [my-dislike]="course.vote.disLike"
+                    (updateVoteFromChildToParent)="updateVote($event, course)"
+                    >
+                      <h4>systeme de Vote</h4>
+                      <div class="title">
+                          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint, recusandae!
+                      </div>
+                 </app-votes>
+                 </div>
+             <div class="text-right">
+                 <button (click)="editCourse(course)" class="btn btn-warning mr-1 btn-sm">Edit</button>
+                 <button (click)="destroyCourse(course.id)" class="btn btn-sm btn-danger">delete</button>
+             </div>
+             </li>
+         </ul>
+    </ng-template>
+    
 </div>
 
 <button class="btn btn-primary">save</button>
