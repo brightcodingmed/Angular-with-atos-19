@@ -10,12 +10,20 @@ import { ContentComponent } from './content/content.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Route } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { VotesComponent } from './votes/votes.component';
 import { GithubComponent } from './github/github.component';
 import { PostsComponent } from './posts/posts.component';
+
+const routes: Route[] = [
+  { path: "", redirectTo: '/posts', pathMatch: 'full' },
+  { path: "posts", component: PostsComponent },
+  { path: "users", component: GithubComponent },
+  { path: "courses", component: CoursesComponent }
+];
 
 @NgModule({
   declarations: [
@@ -34,7 +42,8 @@ import { PostsComponent } from './posts/posts.component';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    FlashMessagesModule.forRoot()
+    FlashMessagesModule.forRoot(),
+    RouterModule.forRoot(routes)
   ],
   providers: [],
   bootstrap: [AppComponent]
