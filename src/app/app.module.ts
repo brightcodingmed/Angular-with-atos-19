@@ -11,6 +11,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { FlashMessagesModule } from 'angular2-flash-messages';
 
 import { VotesComponent } from './votes/votes.component';
 import { GithubComponent } from './github/github.component';
@@ -32,7 +33,8 @@ import { PostsComponent } from './posts/posts.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    FlashMessagesModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

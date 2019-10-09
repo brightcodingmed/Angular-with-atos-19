@@ -2,6 +2,7 @@ import { PostService } from './../post.service';
 import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 import { Post } from '../post';
+import { FlashMessagesService } from 'angular2-flash-messages';
 
 @Component({
   selector: 'app-posts',
@@ -19,7 +20,10 @@ export class PostsComponent implements OnInit {
     body: ''
   }
 
-  constructor(private postService: PostService) { }
+  constructor(
+            private postService: PostService, 
+            private flasMessage: FlashMessagesService) 
+            { }
 
   ngOnInit() {
     this.getAllPosts();
@@ -43,6 +47,12 @@ export class PostsComponent implements OnInit {
               body: ''
             }
             this.display = false;
+            
+            this.flasMessage.show("Post created Successfully", {
+              cssClass: 'alert-success',
+              timer: 3000
+            });
+
           },
           (err) => console.error(err));
     }
