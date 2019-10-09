@@ -1,22 +1,57 @@
 <div class="row my-3">
-    <div class="col-md-12">
+    <div class="col-md-6">
         <h1>List of posts</h1>
+    </div>
+    <div class="col-md-6 text-right">
+        <button (click)="toggleForm()" class="btn btn-light btn-sm">
+            <i class="fa fa-plus"></i>
+        </button>
     </div>
 </div>
 
-<div class="row mb-2">
-    <div class="col-md-6 mx-auto"Body>
+<div class="row mb-2" *ngIf="display">
+    <div class="col-md-6 mx-auto">
+        <form #myForm="ngForm">
         <div class="form-group">
             <label for="Title">Title</label>
-            <input id="Title" type="text" class="form-control">
+            <input 
+              required
+              minlength="3"
+              maxlength="15"
+              ngModel
+              email
+              name="title"
+              #myTitle="ngModel"
+              (change)="log(myTitle)"
+              
+              id="Title" 
+              type="text" 
+              class="form-control">
+              <div *ngIf="myTitle.invalid && myTitle.touched" class="alert alert-danger">
+                  <div *ngIf="myTitle.errors.required">This field is required !</div>
+                  <div *ngIf="myTitle.errors.minlength">
+                      This field should be great than 3 caratcters !
+                  </div>
+                  <div *ngIf="myTitle.errors.pattern">
+                      This field is not respect our pattern !
+                  </div>
+                  <div *ngIf="myTitle.errors.email">
+                    This field is not email !
+                  </div>
+              </div>
         </div>
         <div class="form-group">
             <label for="Body">Body</label>
-            <textarea id="Body" rows="2" class="form-control"></textarea>
+            <textarea ngModel name="body" id="Body" rows="2" class="form-control"></textarea>
         </div>
-        <button class="btn btn-primary btn-block">
+        <button [disabled]="myForm.invalid" *ngIf="operation == 'add' " (click)="savePost(myForm)" class="btn btn-primary btn-block">
             <i class="fa fa-send"></i> Add
         </button>
+
+        <button *ngIf="operation == 'update'" (click)="updatePost()" class="btn btn-warning btn-block">
+            <i class="fa fa-refresh"></i> Update
+        </button>
+     </form>
     </div>
 </div>
 
@@ -37,11 +72,11 @@
                     <td>{{ post.title }}</td>
                     <td>{{ post.body }}</td>
                     <td class="text-right" nowrap>
-                        <button class="btn mr-1 btn-warning btn-sm">
+                        <button (click)="editPost(post)" class="btn mr-1 btn-warning btn-sm">
                             <i class="fa fa-pencil"></i>
                         </button>
 
-                        <button class="btn btn-danger btn-sm">
+                        <button (click)="destroyPost(post.id)" class="btn btn-danger btn-sm">
                             <i class="fa fa-trash"></i> 
                         </button>
                     </td>
